@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Services Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="hiremate-logo.jpg" alt="HireMate Logo" class="logo-img">
+                <span class="logo-text">HireMate</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Profile Selection Section -->
+        <section class="profile-selection-section">
+            <h1>Welcome to HireMate</h1>
+            <p>Choose how you want to use our platform</p>
+            
+            <div class="profile-cards">
+                <div class="profile-card" onclick="window.location.href='login.html?type=user'">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2>User Profile</h2>
+                    <p>Find and book local services</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Book trusted professionals</li>
+                        <li><i class="fas fa-check"></i> Read & write reviews</li>
+                        <li><i class="fas fa-check"></i> Track your bookings</li>
+                    </ul>
+                    <button class="profile-btn">Continue as User</button>
+                </div>
+
+                <div class="profile-card" onclick="window.location.href='login.html?type=professional'">
+                    <div class="profile-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2>Professional Profile</h2>
+                    <p>Offer your services</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> List your services</li>
+                        <li><i class="fas fa-check"></i> Manage bookings</li>
+                        <li><i class="fas fa-check"></i> Grow your business</li>
+                    </ul>
+                    <button class="profile-btn">Continue as Professional</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Connecting you with trusted local service providers</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: support@hiremate.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

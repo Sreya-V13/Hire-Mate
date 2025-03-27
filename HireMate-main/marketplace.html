@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireMate - Marketplace</title>
+    <link rel="stylesheet" href="marketplace-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbG3ORlU0Esa6bHYOrVT85HLkCmfRAcp0">
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="hiremate-logo.jpg" alt="HireMate Logo" class="logo-img">
+            <span class="logo-text">HireMate</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search services...">
+            <button><i class="fas fa-search"></i> Search</button>
+        </div>
+        <div class="nav-links">
+            <a href="#" id="userProfileBtn"><i class="fas fa-user"></i> Profile</a>
+            <div class="menu-container">
+                <button class="menu-toggle" onclick="toggleMenu(event)">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <div class="menu-header">
+                        <a href="#" onclick="toggleDashboard(event)">
+                            <i class="fas fa-th-large"></i> My Dashboard
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                        <div class="main-menu" id="mainMenu">
+                            <a href="#" class="dashboard-trigger" onclick="toggleDashboard(event)">
+                                <i class="fas fa-th-large"></i> My Dashboard
+                            </a>
+                            <div class="dashboard-submenu" id="dashboardSubmenu">
+                                <a href="#"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                                <a href="#"><i class="fas fa-history"></i> Booking History</a>
+                                <a href="#"><i class="fas fa-wallet"></i> Wallet Balance</a>
+                                <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+                                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find the Perfect Service Provider</h1>
+            <p>Connect with trusted professionals in your area</p>
+            <button class="cta-button" onclick="scrollToCategories()">Explore Services</button>
+        </div>
+    </section>
+
+    <!-- User Dashboard -->
+    <section class="dashboard" id="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-th-large"></i> My Dashboard</h2>
+                <button class="close-dashboard" onclick="toggleDashboard(event)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Dashboard Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h4>Active Bookings</h4>
+                    <p id="activeBookingsCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-history"></i>
+                    <h4>Total Bookings</h4>
+                    <p id="totalBookingsCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-wallet"></i>
+                    <h4>Wallet Balance</h4>
+                    <p id="walletBalance">₹0</p>
+                </div>
+            </div>
+            
+            <!-- Booking Progress -->
+            <div class="booking-progress">
+                <h3>Current Booking Status</h3>
+                <div class="progress-container" id="bookingProgressContainer">
+                    <div class="progress-steps">
+                        <div class="progress-step" data-status="pending">
+                            <i class="fas fa-clock"></i>
+                            <span>Pending</span>
+                        </div>
+                        <div class="progress-step" data-status="accepted">
+                            <i class="fas fa-check"></i>
+                            <span>Accepted</span>
+                        </div>
+                        <div class="progress-step" data-status="in-progress">
+                            <i class="fas fa-tools"></i>
+                            <span>In Progress</span>
+                        </div>
+                        <div class="progress-step" data-status="completed">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Bookings -->
+            <div class="upcoming-bookings">
+                <h3>Upcoming Bookings</h3>
+                <div class="booking-list" id="upcomingBookingsList">
+                    <!-- Upcoming bookings will be populated here -->
+                </div>
+            </div>
+
+            <!-- Past Bookings -->
+            <div class="past-bookings">
+                <h3>Past Bookings</h3>
+                <div class="booking-list" id="pastBookingsList">
+                    <!-- Past bookings will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2>Browse by Category</h2>
+            <div class="category-grid">
+                <!-- Technology Category -->
+                <div class="category-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Technology</h3>
+                    <div class="services-list">
+                        <div class="service-item">
+                            <span>Computer Repair</span>
+                            <span>₹1500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>IT Consulting</span>
+                            <span>₹2000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Web Development</span>
+                            <span>₹2500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Network Setup</span>
+                            <span>₹2000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Data Recovery</span>
+                            <span>₹1750/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Virus Removal</span>
+                            <span>₹1200/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Software Installation</span>
+                            <span>₹1350/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Smart Home Setup</span>
+                            <span>₹1800/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Tech Training</span>
+                            <span>₹1550/hr</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Services Category -->
+                <div class="category-card">
+                    <i class="fas fa-home"></i>
+                    <h3>Home Services</h3>
+                    <div class="services-list">
+                        <div class="service-item">
+                            <span>House Cleaning</span>
+                            <span>₹1000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Plumbing</span>
+                            <span>₹1200/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Electrical Work</span>
+                            <span>₹1100/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Painting</span>
+                            <span>₹3000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Carpentry</span>
+                            <span>₹2500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Garden Maintenance</span>
+                            <span>₹3500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Pest Control</span>
+                            <span>₹1300/visit</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Interior Design</span>
+                            <span>₹4500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Moving Services</span>
+                            <span>₹900/hr</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Category -->
+                <div class="category-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Education</h3>
+                    <div class="services-list">
+                        <div class="service-item">
+                            <span>Math Tutoring</span>
+                            <span>₹2500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Science Tutoring</span>
+                            <span>₹2300/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Language Classes</span>
+                            <span>₹1900/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Test Preparation</span>
+                            <span>₹1200/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Music Lessons</span>
+                            <span>₹2000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Art Classes</span>
+                            <span>₹2500/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Coding Classes</span>
+                            <span>₹6000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Business Tutoring</span>
+                            <span>₹3000/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Writing Help</span>
+                            <span>₹1000/hr</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body & Hair Care Category -->
+                <div class="category-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Body & Hair Care</h3>
+                    <div class="services-list">
+                        <div class="service-item">
+                            <span>Haircut & Styling</span>
+                            <span>₹2000/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Hair Coloring</span>
+                            <span>₹2200/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Massage Therapy</span>
+                            <span>₹2100/hr</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Facial Treatment</span>
+                            <span>₹2300/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Manicure</span>
+                            <span>₹2500/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Pedicure</span>
+                            <span>₹2500/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Waxing</span>
+                            <span>₹2300/area</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Hair Treatment</span>
+                            <span>₹3000/service</span>
+                        </div>
+                        <div class="service-item">
+                            <span>Makeup Service</span>
+                            <span>₹3500/service</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (Initially Hidden) -->
+    <section class="services-section" id="servicesSection">
+        <div class="container">
+            <div class="services-header">
+                <button class="back-btn" onclick="hideServices()">
+                    <i class="fas fa-arrow-left"></i> Back to Categories
+                </button>
+                <h2 id="selectedCategory">Category Services</h2>
+            </div>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be dynamically populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated Professionals -->
+    <section class="professionals" id="professionals">
+        <div class="container">
+            <h2>Top-Rated Professionals</h2>
+            <div class="professionals-grid">
+                <!-- Professional 1 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3" alt="Rajesh Kumar">
+                        <div class="pro-badge">Top Rated</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Rajesh Kumar</h3>
+                        <p class="pro-title">Home Renovation Expert</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(128 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Mumbai</p>
+                            <p><i class="fas fa-briefcase"></i> 8 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹1200/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Professional 2 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3" alt="Priya Sharma">
+                        <div class="pro-badge">Featured</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Priya Sharma</h3>
+                        <p class="pro-title">Interior Designer</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(95 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Delhi</p>
+                            <p><i class="fas fa-briefcase"></i> 6 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹1500/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Professional 3 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3" alt="Amit Patel">
+                        <div class="pro-badge">Premium</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Amit Patel</h3>
+                        <p class="pro-title">Plumbing Specialist</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(156 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Bangalore</p>
+                            <p><i class="fas fa-briefcase"></i> 10 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹800/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Professional 4 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1580518337843-f959e992563b?ixlib=rb-4.0.3" alt="Deepa Verma">
+                        <div class="pro-badge">Top Rated</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Deepa Verma</h3>
+                        <p class="pro-title">Electrical Engineer</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(142 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Chennai</p>
+                            <p><i class="fas fa-briefcase"></i> 7 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹1000/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Professional 5 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1562788869-4ed32648eb72?ixlib=rb-4.0.3" alt="Suresh Reddy">
+                        <div class="pro-badge">Featured</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Suresh Reddy</h3>
+                        <p class="pro-title">Landscaping Expert</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(89 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Hyderabad</p>
+                            <p><i class="fas fa-briefcase"></i> 5 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹900/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Professional 6 -->
+                <div class="professional-card">
+                    <div class="pro-image">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3" alt="Meera Iyer">
+                        <div class="pro-badge">Premium</div>
+                    </div>
+                    <div class="pro-info">
+                        <h3>Meera Iyer</h3>
+                        <p class="pro-title">HVAC Specialist</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(112 reviews)</span>
+                        </div>
+                        <div class="pro-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Pune</p>
+                            <p><i class="fas fa-briefcase"></i> 9 years experience</p>
+                            <p><i class="fas fa-clock"></i> ₹1100/hour</p>
+                        </div>
+                        <a href="booking.html?service=all&category=all" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content booking-modal">
+            <span class="close-modal" onclick="closeBookingModal()">&times;</span>
+            <h2>Available Professionals</h2>
+            <div class="selected-service-info">
+                <h3 id="selectedServiceName"></h3>
+                <p id="selectedServiceCategory"></p>
+            </div>
+            <div class="professionals-booking-grid" id="availableProfessionals">
+                <!-- Professionals will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About HireMate</h3>
+                <p>Connecting you with trusted local service providers</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> support@hiremate.com</p>
+                <p><i class="fas fa-phone"></i> +91 (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 HireMate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="marketplace.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HireMate</title>
+    <link rel="stylesheet" href="login-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">
+                <img src="hiremate-logo.jpg" alt="HireMate Logo" class="logo-img">
+                <span class="logo-text">HireMate</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <!-- User Login Form -->
+            <div class="form-container" id="userLoginForm">
+                <h2>User Login</h2>
+                <p class="profile-type">User Account</p>
+                
+                <form onsubmit="return handleUserLogin(event)">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="userEmail" value="sampleuser@gmail.com" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="userPassword" value="user@123" readonly>
+                    </div>
+
+                    <div class="captcha-group">
+                        <div class="captcha" id="userCaptchaText"></div>
+                        <button type="button" onclick="generateCaptcha('user')" class="refresh-captcha">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="text" id="userCaptchaInput" placeholder="Enter Captcha" required autofocus>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Login</button>
+                    
+                    <p class="switch-form">
+                        Don't have an account? 
+                        <a href="#" onclick="toggleForm('user', 'register')">Create Account</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Professional Login Form -->
+            <div class="form-container" id="professionalLoginForm" style="display: none;">
+                <h2>Professional Login</h2>
+                <p class="profile-type">Professional Account</p>
+                
+                <form onsubmit="return handleProfessionalLogin(event)">
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="professionalId" value="1234" readonly>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="proEmail" value="professional@gmail.com" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="proPassword" value="professional@123" readonly>
+                    </div>
+
+                    <div class="captcha-group">
+                        <div class="captcha" id="proCaptchaText"></div>
+                        <button type="button" onclick="generateCaptcha('professional')" class="refresh-captcha">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="text" id="proCaptchaInput" placeholder="Enter Captcha" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Login</button>
+                    
+                    <p class="switch-form">
+                        Don't have an account? 
+                        <a href="#" onclick="toggleForm('professional', 'register')">Create Account</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- User Registration Form -->
+            <div class="form-container" id="userRegisterForm" style="display: none;">
+                <h2>Create User Account</h2>
+                <p class="profile-type">User Account</p>
+                
+                <form onsubmit="return handleUserRegistration(event)">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="userRegisterName" placeholder="Full Name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="userRegisterEmail" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="userRegisterPassword" placeholder="Create Password" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="userConfirmPassword" placeholder="Confirm Password" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    
+                    <p class="switch-form">
+                        Already have an account? 
+                        <a href="#" onclick="toggleForm('user', 'login')">Login</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Professional Registration Form -->
+            <div class="form-container" id="professionalRegisterForm" style="display: none;">
+                <h2>Create Professional Account</h2>
+                <p class="profile-type">Professional Account</p>
+                
+                <form onsubmit="return handleProfessionalRegistration(event)">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="proRegisterName" placeholder="Full Name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-briefcase"></i>
+                        <input type="text" id="profession" placeholder="Profession/Service Type" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="proRegisterEmail" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="proRegisterPhone" placeholder="Phone Number" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="proRegisterPassword" placeholder="Create Password" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="proConfirmPassword" placeholder="Confirm Password" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    
+                    <p class="switch-form">
+                        Already have an account? 
+                        <a href="#" onclick="toggleForm('professional', 'login')">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let userCaptcha = '';
+        let proCaptcha = '';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type') || 'user';
+            showInitialForm(type);
+            
+            // Generate initial captchas
+            generateCaptcha('user');
+            generateCaptcha('professional');
+        });
+
+        function showInitialForm(type) {
+            document.getElementById('userLoginForm').style.display = 'none';
+            document.getElementById('professionalLoginForm').style.display = 'none';
+            document.getElementById('userRegisterForm').style.display = 'none';
+            document.getElementById('professionalRegisterForm').style.display = 'none';
+
+            if (type === 'user') {
+                document.getElementById('userLoginForm').style.display = 'block';
+            } else {
+                document.getElementById('professionalLoginForm').style.display = 'block';
+            }
+        }
+
+        function generateCaptcha(type) {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            if (type === 'user') {
+                userCaptcha = captcha;
+                document.getElementById('userCaptchaText').textContent = captcha;
+            } else {
+                proCaptcha = captcha;
+                document.getElementById('proCaptchaText').textContent = captcha;
+            }
+        }
+
+        function toggleForm(type, formType) {
+            document.getElementById('userLoginForm').style.display = 'none';
+            document.getElementById('professionalLoginForm').style.display = 'none';
+            document.getElementById('userRegisterForm').style.display = 'none';
+            document.getElementById('professionalRegisterForm').style.display = 'none';
+
+            if (type === 'user') {
+                if (formType === 'register') {
+                    document.getElementById('userRegisterForm').style.display = 'block';
+                } else {
+                    document.getElementById('userLoginForm').style.display = 'block';
+                    generateCaptcha('user');
+                }
+            } else {
+                if (formType === 'register') {
+                    document.getElementById('professionalRegisterForm').style.display = 'block';
+                } else {
+                    document.getElementById('professionalLoginForm').style.display = 'block';
+                    generateCaptcha('professional');
+                }
+            }
+        }
+
+        function handleUserLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const captchaInput = document.getElementById('userCaptchaInput').value;
+
+            if (captchaInput !== userCaptcha) {
+                alert('Invalid captcha! Please try again.');
+                generateCaptcha('user');
+                document.getElementById('userCaptchaInput').value = '';
+                return false;
+            }
+
+            // Check for demo user credentials
+            if (email === 'sampleuser@gmail.com' && password === 'user@123') {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userType', 'user');
+                localStorage.setItem('userName', email);
+                window.location.href = 'marketplace.html';
+            } else {
+                alert('Invalid credentials! Please try again.');
+                generateCaptcha('user');
+            }
+            return false;
+        }
+
+        function handleProfessionalLogin(event) {
+            event.preventDefault();
+            
+            const proId = document.getElementById('professionalId').value;
+            const email = document.getElementById('proEmail').value;
+            const password = document.getElementById('proPassword').value;
+            const captchaInput = document.getElementById('proCaptchaInput').value;
+
+            if (captchaInput !== proCaptcha) {
+                alert('Invalid captcha! Please try again.');
+                generateCaptcha('professional');
+                document.getElementById('proCaptchaInput').value = '';
+                return false;
+            }
+
+            // Check for demo professional credentials
+            if (proId === '1234' && email === 'professional@gmail.com' && password === 'professional@123') {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userType', 'professional');
+                localStorage.setItem('professionalId', proId);
+                localStorage.setItem('userName', email);
+                window.location.href = 'professional.html';
+            } else {
+                alert('Invalid credentials! Please try again.');
+                generateCaptcha('professional');
+            }
+            return false;
+        }
+
+        function handleUserRegistration(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('userRegisterName').value;
+            const email = document.getElementById('userRegisterEmail').value;
+            const password = document.getElementById('userRegisterPassword').value;
+            const confirmPassword = document.getElementById('userConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return false;
+            }
+
+            // Here you would typically make an API call to create the account
+            // For demo purposes, we'll generate a user ID
+            const userId = 'USER' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            alert(`Account created successfully!\nYour User ID is: ${userId}\nPlease save this ID for login.`);
+            
+            toggleForm('user', 'login');
+            return false;
+        }
+
+        function handleProfessionalRegistration(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('proRegisterName').value;
+            const profession = document.getElementById('profession').value;
+            const email = document.getElementById('proRegisterEmail').value;
+            const phone = document.getElementById('proRegisterPhone').value;
+            const password = document.getElementById('proRegisterPassword').value;
+            const confirmPassword = document.getElementById('proConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return false;
+            }
+
+            // Here you would typically make an API call to create the account
+            // For demo purposes, we'll generate a professional ID
+            const professionalId = 'PRO' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            alert(`Account created successfully!\nYour Professional ID is: ${professionalId}\nPlease save this ID for login.`);
+            
+            toggleForm('professional', 'login');
+            return false;
+        }
+    </script>
+</body>
+</html> 

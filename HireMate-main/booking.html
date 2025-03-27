@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireMate - Book Service</title>
+    <link rel="stylesheet" href="marketplace-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbG3ORlU0Esa6bHYOrVT85HLkCmfRAcp0">
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar (same as marketplace.html) -->
+    <nav class="navbar">
+        <!-- ... copy navbar from marketplace.html ... -->
+    </nav>
+
+    <!-- Booking Section -->
+    <section class="booking-section" style="margin-top: 80px;">
+        <div class="container">
+            <div class="booking-layout">
+                <div class="professionals-list">
+                    <h2>Available Professionals</h2>
+                    <div class="professionals-grid" id="availableProfessionals">
+                        <!-- Professionals will be populated here -->
+                    </div>
+                </div>
+                <div class="booking-details" id="bookingDetails" style="display: none;">
+                    <div class="map-container">
+                        <div id="map" style="height: 300px; width: 100%; border-radius: 12px;"></div>
+                    </div>
+                    <div class="booking-summary">
+                        <h3>Booking Summary</h3>
+                        <div id="summaryContent">
+                            <!-- Booking summary will be populated here -->
+                        </div>
+                        <button class="confirm-booking-btn" onclick="finalizeBooking()">Confirm Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="booking.js"></script>
+</body>
+</html>
